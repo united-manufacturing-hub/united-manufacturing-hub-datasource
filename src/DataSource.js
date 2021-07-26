@@ -258,6 +258,9 @@ var DataSource = /** @class */ (function (_super) {
                         value = this.template_value;
                         // Define location
                         if (this.isEmptyOrUndefined(location_1)) {
+                            if (queries[i].location === undefined || queries[i].location.label === undefined) {
+                                return [3 /*break*/, 3];
+                            }
                             location_1 = queries[i].location.label;
                             if (this.isEmptyOrUndefined(location_1)) {
                                 return [3 /*break*/, 3];
@@ -304,16 +307,17 @@ var DataSource = /** @class */ (function (_super) {
     /// Replacement for deprecated fetchAPIRequest, using fetch api
     DataSource.prototype.fetchAPIRequest = function (options) {
         return __awaiter(this, void 0, void 0, function () {
-            var b64encodedAuth;
+            var b64encodedAuth, url;
             return __generator(this, function (_a) {
                 if (options.headers === undefined) {
                     options.headers = {};
                 }
                 b64encodedAuth = Buffer.from(this.customerId + ":" + this.apiKey).toString('base64');
                 options.headers["Authorization"] = "Basic " + b64encodedAuth;
+                url = options.url.replace("process_yourProcessValueName", "process_");
                 //console.log("Executing request with options: ", JSON.stringify(options))
                 return [2 /*return*/, this.backendSrv.fetch({
-                        url: options.url,
+                        url: url,
                         method: options.method || 'GET',
                         headers: options.headers
                     }).toPromise()];

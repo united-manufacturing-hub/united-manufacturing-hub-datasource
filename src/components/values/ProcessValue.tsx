@@ -39,12 +39,12 @@ export class ProcessValue extends Component<Props, State> {
 
 
     onProcessValueChange = (event: ChangeEvent<HTMLInputElement>) => {
-        let processValue = `${this.state.processValue}`;
         this.setState({
             processValue: event.target.value,
         });
         console.log("processValue (after state update): ", this.state.processValue)
-        this.props.onChange(processValue);
+        console.log("actual value (after state update): ",  event.target.value)
+        this.props.onChange(event.target.value);
     };
 
     render() {

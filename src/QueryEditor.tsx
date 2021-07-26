@@ -175,7 +175,7 @@ export class QueryEditor extends PureComponent<Props, State> {
 
     // Get the location-asset-value-related datapoints from the server
     // and update the default parameter string
-    this.updateChart(value, newParameterString);
+    this.updateChart(value, newParameterString,'');
   };
 
   // Handle parameters change
@@ -188,7 +188,7 @@ export class QueryEditor extends PureComponent<Props, State> {
     });
 
     // Update chart
-    this.updateChart(this.state.selectedValue, newParameterString);
+    this.updateChart(this.state.selectedValue, newParameterString,'');
   };
 
   // Handle urlPathExtension change
@@ -200,7 +200,7 @@ export class QueryEditor extends PureComponent<Props, State> {
     });
 
     // Update chart
-    this.updateChart(this.state.selectedValue, '');
+    this.updateChart(this.state.selectedValue, '',uriPathExtension);
   };
 
 
@@ -234,7 +234,7 @@ export class QueryEditor extends PureComponent<Props, State> {
 
   // Update chart values. The value parameter is required to avoid
   // waiting for the state to be updated asynchronously
-  updateChart = (value: { label: string; index: number }, parameterString = '') => {
+  updateChart = (value: { label: string; index: number }, parameterString = '', uriPathExtension = '') => {
     const { onChange, query, onRunQuery } = this.props;
     onChange({
       ...query,
@@ -243,7 +243,7 @@ export class QueryEditor extends PureComponent<Props, State> {
       value: value,
       parameterString: parameterString,
       labelsField: this.state.labelsField,
-      uriPathExtension: this.state.uriPathExtension
+      uriPathExtension: uriPathExtension
     });
     // executes the query
     onRunQuery();
@@ -256,7 +256,7 @@ export class QueryEditor extends PureComponent<Props, State> {
     });
   };
 
-  useColumnAsFieldNames = (event: MouseEvent<HTMLButtonElement>) => {
+  useColumnAsFieldNames = (_: MouseEvent<HTMLButtonElement>) => {
     // Update the chart
     this.updateChart(this.state.selectedValue, this.state.parameterString);
   };

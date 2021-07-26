@@ -107,7 +107,7 @@ var QueryEditor = /** @class */ (function (_super) {
             }
             // Get the location-asset-value-related datapoints from the server
             // and update the default parameter string
-            _this.updateChart(value, newParameterString);
+            _this.updateChart(value, newParameterString, '');
         };
         // Handle parameters change
         _this.onParametersChange = function (parameterString) {
@@ -118,7 +118,7 @@ var QueryEditor = /** @class */ (function (_super) {
                 parameterString: newParameterString,
             });
             // Update chart
-            _this.updateChart(_this.state.selectedValue, newParameterString);
+            _this.updateChart(_this.state.selectedValue, newParameterString, '');
         };
         // Handle urlPathExtension change
         _this.onuriPathExtensionChange = function (uriPathExtension) {
@@ -128,7 +128,7 @@ var QueryEditor = /** @class */ (function (_super) {
                 uriPathExtension: uriPathExtension,
             });
             // Update chart
-            _this.updateChart(_this.state.selectedValue, '');
+            _this.updateChart(_this.state.selectedValue, '', uriPathExtension);
         };
         // Get value-related parameters
         _this.getParameterComponents = function () {
@@ -153,10 +153,11 @@ var QueryEditor = /** @class */ (function (_super) {
         };
         // Update chart values. The value parameter is required to avoid
         // waiting for the state to be updated asynchronously
-        _this.updateChart = function (value, parameterString) {
+        _this.updateChart = function (value, parameterString, uriPathExtension) {
             if (parameterString === void 0) { parameterString = ''; }
+            if (uriPathExtension === void 0) { uriPathExtension = ''; }
             var _a = _this.props, onChange = _a.onChange, query = _a.query, onRunQuery = _a.onRunQuery;
-            onChange(__assign(__assign({}, query), { location: _this.state.selectedLocation, asset: _this.state.selectedAsset, value: value, parameterString: parameterString, labelsField: _this.state.labelsField, uriPathExtension: _this.state.uriPathExtension }));
+            onChange(__assign(__assign({}, query), { location: _this.state.selectedLocation, asset: _this.state.selectedAsset, value: value, parameterString: parameterString, labelsField: _this.state.labelsField, uriPathExtension: uriPathExtension }));
             // executes the query
             onRunQuery();
         };
@@ -166,7 +167,7 @@ var QueryEditor = /** @class */ (function (_super) {
                 labelsField: event.target.value,
             });
         };
-        _this.useColumnAsFieldNames = function (event) {
+        _this.useColumnAsFieldNames = function (_) {
             // Update the chart
             _this.updateChart(_this.state.selectedValue, _this.state.parameterString);
         };

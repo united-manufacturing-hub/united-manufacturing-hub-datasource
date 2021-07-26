@@ -5,25 +5,25 @@
   "metrics": true,
   "backend": true,
   "info": {
-    "description": "TODO",
+    "description": "This plugin provides an Datasource for UMH Systems factoryinsight microservice",
     "author": {
-      "name": "UMH Gmbh",
+      "name": "UMH Systems Gmbh",
       "url": ""
     },
     "keywords": [
     ],
     "logos": {
-      "small": "img/xlogo.svg",
-      "large": "img/xlogo.svg"
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
     },
     "links": [
       {
         "name": "Website",
-        "url": "https://github.com/grafana/simple-datasource"
+        "url": "https://github.com/united-manufacturing-hub/united-manufacturing-hub-datasource"
       },
       {
         "name": "License",
-        "url": "https://github.com/grafana/simple-datasource/blob/master/LICENSE"
+        "url": "https://github.com/united-manufacturing-hub/united-manufacturing-hub-datasource/blob/main/LICENSE"
       }
     ],
     "screenshots": [],

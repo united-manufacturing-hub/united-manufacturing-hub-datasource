@@ -13,12 +13,12 @@ var ProcessValue = /** @class */ (function (_super) {
         // Initialise
         _super.call(this, props) || this;
         _this.onProcessValueChange = function (event) {
-            var processValue = "" + _this.state.processValue;
             _this.setState({
                 processValue: event.target.value,
             });
             console.log("processValue (after state update): ", _this.state.processValue);
-            _this.props.onChange(processValue);
+            console.log("actual value (after state update): ", event.target.value);
+            _this.props.onChange(event.target.value);
         };
         // Parse passed string and initialise state
         var processValue = "";
