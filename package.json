@@ -1,14 +1,14 @@
 {
   "name": "umh-datasource",
   "version": "1.0.0",
-  "description": "TODO",
+  "description": "This plugin provides an Datasource for UMH Systems factoryinsight microservice",
   "scripts": {
     "build": "grafana-toolkit plugin:build",
     "test": "grafana-toolkit plugin:test",
     "dev": "grafana-toolkit plugin:dev",
     "watch": "grafana-toolkit plugin:dev --watch"
   },
-  "author": "UMH Gmbh",
+  "author": "UMH Systems Gmbh",
   "license": "AGPL-3.0-only",
   "devDependencies": {
     "@grafana/data": "latest",
