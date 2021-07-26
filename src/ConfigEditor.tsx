@@ -1,80 +1,98 @@
 import React, { ChangeEvent, PureComponent } from 'react';
 import { LegacyForms } from '@grafana/ui';
 import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
-import { MyDataSourceOptions, MySecureJsonData } from './types';
+import { JSONQueryOptions } from './types';
 
 const { SecretFormField, FormField } = LegacyForms;
 
-interface Props extends DataSourcePluginOptionsEditorProps<MyDataSourceOptions> {}
+interface Props extends DataSourcePluginOptionsEditorProps<JSONQueryOptions> {}
 
 interface State {}
 
 export class ConfigEditor extends PureComponent<Props, State> {
-  onPathChange = (event: ChangeEvent<HTMLInputElement>) => {
+  onCustomerChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onOptionsChange, options } = this.props;
     const jsonData = {
       ...options.jsonData,
-      path: event.target.value,
+      customerId: event.target.value,
     };
     onOptionsChange({ ...options, jsonData });
   };
 
-  // Secure field (only sent to the backend)
+  onServerChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onOptionsChange, options } = this.props;
+    const jsonData = {
+      ...options.jsonData,
+      serverURL: event.target.value,
+    };
+    onOptionsChange({ ...options, jsonData });
+  };
+
   onAPIKeyChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onOptionsChange, options } = this.props;
-    onOptionsChange({
-      ...options,
-      secureJsonData: {
+    const regex_match = event.target.value.match("^[0-9a-z]{8}(-[0-9a-z]{4}){3}-[0-9a-z]{12}$");
+    if (regex_match !== null && regex_match[0].length == 36) {
+      const jsonData = {
+        ...options.jsonData,
         apiKey: event.target.value,
-      },
-    });
+        /// UUI4
+        apiKeyConfigured: true
+      };
+      onOptionsChange({...options, jsonData});
+    }
   };
 
   onResetAPIKey = () => {
     const { onOptionsChange, options } = this.props;
-    onOptionsChange({
-      ...options,
-      secureJsonFields: {
-        ...options.secureJsonFields,
-        apiKey: false,
-      },
-      secureJsonData: {
-        ...options.secureJsonData,
-        apiKey: '',
-      },
-    });
+    const jsonData = {
+      ...options.jsonData,
+      apiKey: '',
+      apiKeyConfigured: false,
+    };
+    onOptionsChange({ ...options, jsonData });
   };
 
   render() {
     const { options } = this.props;
-    const { jsonData, secureJsonFields } = options;
-    const secureJsonData = (options.secureJsonData || {}) as MySecureJsonData;
+    const { jsonData } = options;
 
     return (
       <div className="gf-form-group">
-        <div className="gf-form">
-          <FormField
-            label="Path"
-            labelWidth={6}
-            inputWidth={20}
-            onChange={this.onPathChange}
-            value={jsonData.path || ''}
-            placeholder="json field returned to frontend"
-          />
-        </div>
-
-        <div className="gf-form-inline">
+        <h3 className="page-heading">Customer information</h3>
+        <div className="gf-form-group">
           <div className="gf-form">
-            <SecretFormField
-              isConfigured={(secureJsonFields && secureJsonFields.apiKey) as boolean}
-              value={secureJsonData.apiKey || ''}
-              label="API Key"
-              placeholder="secure json field (backend only)"
+            <FormField
+              label="Server"
               labelWidth={6}
               inputWidth={20}
-              onReset={this.onResetAPIKey}
-              onChange={this.onAPIKeyChange}
+              onChange={this.onServerChange}
+              value={jsonData.serverURL || ''}
+              placeholder="Server URL"
             />
+          </div>
+          <div className="gf-form">
+            <FormField
+              label="Customer"
+              labelWidth={6}
+              inputWidth={20}
+              onChange={this.onCustomerChange}
+              value={jsonData.customerId || ''}
+              placeholder="Customer ID"
+            />
+          </div>
+          <div className="gf-form-inline">
+            <div className="gf-form">
+              <SecretFormField
+                isConfigured={jsonData.apiKeyConfigured !== undefined && jsonData.apiKeyConfigured}
+                value={jsonData.apiKey || ''}
+                label="API Key"
+                placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                labelWidth={6}
+                inputWidth={20}
+                onReset={this.onResetAPIKey}
+                onChange={this.onAPIKeyChange}
+              />
+            </div>
           </div>
         </div>
       </div>

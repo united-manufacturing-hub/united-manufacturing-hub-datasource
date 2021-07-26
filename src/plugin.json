@@ -1,31 +1,37 @@
 {
-  "$schema": "https://raw.githubusercontent.com/grafana/grafana/master/docs/sources/developers/plugins/plugin.schema.json",
   "type": "datasource",
-  "name": "Grafana Data Source Plugin Template",
-  "id": "myorgid-simple-datasource",
+  "name": "umh-datasource",
+  "id": "umh-datasource",
   "metrics": true,
-
+  "backend": true,
   "info": {
-    "description": "Grafana Data Source Plugin Template",
+    "description": "TODO",
     "author": {
-      "name": "Your Name"
+      "name": "UMH Gmbh",
+      "url": ""
     },
-    "keywords": ["Simple"],
+    "keywords": [
+    ],
     "logos": {
-      "small": "img/logo.svg",
-      "large": "img/logo.svg"
+      "small": "img/xlogo.svg",
+      "large": "img/xlogo.svg"
     },
     "links": [
-      { "name": "Website", "url": "https://github.com/grafana/grafana-starter-datasource" },
-      { "name": "License", "url": "https://github.com/grafana/grafana-starter-datasource/blob/master/LICENSE" }
+      {
+        "name": "Website",
+        "url": "https://github.com/grafana/simple-datasource"
+      },
+      {
+        "name": "License",
+        "url": "https://github.com/grafana/simple-datasource/blob/master/LICENSE"
+      }
     ],
     "screenshots": [],
     "version": "%VERSION%",
     "updated": "%TODAY%"
   },
-
   "dependencies": {
-    "grafanaDependency": ">=7.0.0",
+    "grafanaVersion": ">=7.0.0",
     "plugins": []
   }
 }
