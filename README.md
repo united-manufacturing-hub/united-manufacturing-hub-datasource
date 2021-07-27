@@ -16,7 +16,7 @@ yarn install
 ```BASH
 yarn dev
 ```
-3. Build plugin in production mode
+3. Build plugin in production mode (not recommended due to [Issue 32336](https://github.com/grafana/grafana/issues/32336))
 ```BASH
 yarn build
 ```

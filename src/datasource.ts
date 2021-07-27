@@ -272,6 +272,9 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
       let value = this.template_value;
       // Define location
       if (this.isEmptyOrUndefined(location)) {
+        if (queries[i] === undefined || queries[i].location === undefined){
+          continue
+        }
         location = queries[i].location.label;
         if (this.isEmptyOrUndefined(location)) {
           continue;

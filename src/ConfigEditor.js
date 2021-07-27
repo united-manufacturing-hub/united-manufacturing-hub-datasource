@@ -19,12 +19,10 @@ var ConfigEditor = /** @class */ (function (_super) {
         _this.onAPIKeyChange = function (event) {
             var _a = _this.props, onOptionsChange = _a.onOptionsChange, options = _a.options;
             var regex_match = event.target.value.match("^[0-9a-z]{8}(-[0-9a-z]{4}){3}-[0-9a-z]{12}$");
-            if (regex_match !== null && regex_match[0].length == 36) {
-                var jsonData = __assign(__assign({}, options.jsonData), { apiKey: event.target.value, 
-                    /// UUI4
-                    apiKeyConfigured: true });
-                onOptionsChange(__assign(__assign({}, options), { jsonData: jsonData }));
-            }
+            var jsonData = __assign(__assign({}, options.jsonData), { apiKey: event.target.value, 
+                /// UUI4
+                apiKeyConfigured: regex_match !== null && regex_match[0].length == 36 });
+            onOptionsChange(__assign(__assign({}, options), { jsonData: jsonData }));
         };
         _this.onResetAPIKey = function () {
             var _a = _this.props, onOptionsChange = _a.onOptionsChange, options = _a.options;
