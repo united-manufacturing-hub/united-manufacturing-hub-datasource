@@ -21,7 +21,7 @@ var ConfigEditor = /** @class */ (function (_super) {
             var regex_match = event.target.value.match("^[0-9a-z]{8}(-[0-9a-z]{4}){3}-[0-9a-z]{12}$");
             var jsonData = __assign(__assign({}, options.jsonData), { apiKey: event.target.value, 
                 /// UUI4
-                apiKeyConfigured: regex_match !== null && regex_match[0].length == 36 });
+                apiKeyConfigured: regex_match !== null && regex_match[0].length === 36 });
             onOptionsChange(__assign(__assign({}, options), { jsonData: jsonData }));
         };
         _this.onResetAPIKey = function () {

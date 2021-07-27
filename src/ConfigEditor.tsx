@@ -35,7 +35,7 @@ export class ConfigEditor extends PureComponent<Props, State> {
       ...options.jsonData,
       apiKey: event.target.value,
       /// UUI4
-      apiKeyConfigured: regex_match !== null && regex_match[0].length == 36
+      apiKeyConfigured: regex_match !== null && regex_match[0].length === 36
     };
     onOptionsChange({...options, jsonData});
   };
