@@ -50,7 +50,7 @@ jobs:
           steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
           steps.cache-node-modules.outputs.cache-hit != 'true'
 
-      - name: Build and test frontend
+      - name: Build frontend
         run: yarn dev
 
       - name: Get plugin metadata
