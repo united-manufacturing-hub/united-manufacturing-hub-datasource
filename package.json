@@ -1,6 +1,6 @@
 {
   "name": "umh-datasource",
-  "version": "0.1.0",
+  "version": "0.0.5",
   "description": "This plugin provides an Datasource for UMH Systems factoryinsight microservice",
   "scripts": {
     "build": "grafana-toolkit plugin:build",
