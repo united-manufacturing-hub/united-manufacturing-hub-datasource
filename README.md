@@ -23,7 +23,13 @@ yarn build
 4. Move the resulting dist folder into your grafana plugins directory
  - Windows: ```C:\Program Files\GrafanaLabs\grafana\data\plugins```
  - Linux: ```/var/lib/grafana/plugins```
-5. You need to [enable development](https://grafana.com/docs/grafana/latest/administration/configuration/) mode to load unsigned plugins
+5. Rename the folder to umh-datasource
+
+
+6. You need to [enable development](https://grafana.com/docs/grafana/latest/administration/configuration/) mode to load unsigned plugins
+
+
+7. Restart your grafana service
 
 ### From Grafana's plugin store
 TODO
