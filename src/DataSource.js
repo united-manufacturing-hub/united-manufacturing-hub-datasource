@@ -326,4 +326,4 @@ var DataSource = /** @class */ (function (_super) {
     return DataSource;
 }(DataSourceApi));
 export { DataSource };
-//# sourceMappingURL=DataSource.js.map
+//# sourceMappingURL=datasource.js.map
