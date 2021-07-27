@@ -93,9 +93,8 @@ jobs:
         run: |
           git clone https://github.com/grafana/plugin-validator
           pushd ./plugin-validator/pkg/cmd/plugincheck2
-          go install
+          go run -config config/default.yaml ${{ steps.metadata.outputs.archive }}
           popd
-          $HOME/go/bin/plugincheck -config config/default.yaml ${{ steps.metadata.outputs.archive }}
 
       - name: Create release
         id: create_release
