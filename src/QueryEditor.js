@@ -1,7 +1,6 @@
 import { __assign, __extends } from "tslib";
 import React, { PureComponent } from 'react';
 import { Button, Input, Select } from '@grafana/ui';
-var DataSource = require("DataSource");
 import { defaultQuery } from './types';
 import { AggregatedStates, aggregatedStatesDefaultString } from 'components/values/AggregatedStates';
 import { defaults } from 'lodash';

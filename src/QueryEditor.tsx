@@ -1,14 +1,14 @@
 import React, {ChangeEvent, MouseEvent, PureComponent} from 'react';
 import {Button, Input, Select} from '@grafana/ui';
 import {QueryEditorProps, SelectableValue} from '@grafana/data';
-const DataSource = require("DataSource")
 import {defaultQuery, JSONQuery, JSONQueryOptions} from './types';
 
 import {AggregatedStates, aggregatedStatesDefaultString} from 'components/values/AggregatedStates';
 import {defaults} from 'lodash';
 import {ProcessValue} from "./components/values/ProcessValue";
+import {DataSource} from "./datasource";
 
-type Props = QueryEditorProps<typeof DataSource, JSONQuery, JSONQueryOptions>;
+type Props = QueryEditorProps<DataSource, JSONQuery, JSONQueryOptions>;
 type State = {
   selectedLocation: { label: string; index: number };
   selectedAsset: { label: string; index: number };
