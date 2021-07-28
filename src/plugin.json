@@ -1,9 +1,8 @@
 {
   "type": "datasource",
-  "name": "umh-datasource",
+  "name": "UMH Datasource",
   "id": "umh-datasource",
   "metrics": true,
-  "backend": true,
   "info": {
     "description": "This plugin provides an Datasource for UMH Systems factoryinsight microservice",
     "author": {
