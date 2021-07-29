@@ -41,7 +41,7 @@ var DataSource = /** @class */ (function (_super) {
             return t;
         };
         _this.customerId = instanceSettings.jsonData.customerId || '';
-        _this.baseURL = (instanceSettings.jsonData.serverURL || 'http://localhost:6080');
+        _this.baseURL = (instanceSettings.jsonData.serverURL || '');
         _this.apiKey = instanceSettings.jsonData.apiKey || '';
         _this.apiKeyConfigured = instanceSettings.jsonData.apiKeyConfigured;
         _this.apiURL = "" + _this.baseURL + _this.apiPath + _this.customerId;
@@ -162,7 +162,7 @@ var DataSource = /** @class */ (function (_super) {
                         };
                         if (!this.apiKeyConfigured) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.fetchAPIRequest({
-                                url: this.baseURL
+                                url: this.apiURL
                             })
                                 .then(function (res) {
                                 if (res === undefined || res.status !== 200 || res.data !== "online") {
