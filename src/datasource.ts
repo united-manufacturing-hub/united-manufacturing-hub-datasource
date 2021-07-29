@@ -18,7 +18,7 @@ import { JSONQuery, JSONQueryOptions, defaultQuery } from './types';
 export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
   // To hold the instance's configuration parameters
   apiURL: string;
-  apiPath = '/api/v1/';
+  apiPath = '/api/v1/factoryinsight/';
   customerId: string;
   apiKey: string;
 
@@ -322,6 +322,7 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
     options.headers["Authorization"] = `Basic ${b64encodedAuth}`
 
     //console.log("Executing request with options: ", JSON.stringify(options))
+
     return this.backendSrv.fetch({
       url: options.url,
       method: options.method || 'GET',
