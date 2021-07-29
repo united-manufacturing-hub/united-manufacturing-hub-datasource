@@ -161,7 +161,7 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
 
     if (this.apiKeyConfigured){
       await this.fetchAPIRequest({
-        url: this.apiURL
+        url: this.baseURL
       })
           .then((res: any) => {
             if (res === undefined || res.status !== 200 || res.data !== "online") {

@@ -162,7 +162,7 @@ var DataSource = /** @class */ (function (_super) {
                         };
                         if (!this.apiKeyConfigured) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.fetchAPIRequest({
-                                url: this.apiURL
+                                url: this.baseURL
                             })
                                 .then(function (res) {
                                 if (res === undefined || res.status !== 200 || res.data !== "online") {
