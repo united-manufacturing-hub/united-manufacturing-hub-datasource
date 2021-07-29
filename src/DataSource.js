@@ -8,7 +8,7 @@ var DataSource = /** @class */ (function (_super) {
     __extends(DataSource, _super);
     function DataSource(instanceSettings, backendSrv) {
         var _this = _super.call(this, instanceSettings) || this;
-        _this.apiPath = '/api/v1/factoryinsight/';
+        _this.apiPath = '/api/v1/';
         _this.getTemplateVariable = function (name, scopedVars) {
             var template = '${' + name + '}';
             var var_value = getTemplateSrv().replace(template, scopedVars);
