@@ -35,7 +35,8 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
   constructor(instanceSettings: DataSourceInstanceSettings<JSONQueryOptions>, backendSrv: any) {
     super(instanceSettings);
     this.customerId = instanceSettings.jsonData.customerId || '';
-    this.baseURL = (instanceSettings.jsonData.serverURL || '')
+    //this.baseURL = (instanceSettings.jsonData.serverURL || '')
+    this.baseURL = (instanceSettings.url || '')
     this.apiKey = instanceSettings.jsonData.apiKey || '';
     this.apiKeyConfigured = instanceSettings.jsonData.apiKeyConfigured;
     this.apiURL = `${this.baseURL}${this.apiPath}${this.customerId}`;

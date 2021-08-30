@@ -32,5 +32,17 @@
   "dependencies": {
     "grafanaVersion": ">=8.0.0",
     "plugins": []
-  }
+  },
+  "routes": [
+    {
+      "path": "factoryinsight",
+      "url": "{{ .JsonData.serverURL }}",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "content": "application/json"
+        }
+      ]
+    }
+  ]
 }
