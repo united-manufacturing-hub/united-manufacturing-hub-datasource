@@ -1,6 +1,5 @@
 import defaults from 'lodash/defaults';
 import { isUndefined, isString } from 'lodash';
-
 import {
   DataQueryRequest,
   DataQueryResponse,
@@ -11,7 +10,7 @@ import {
   ScopedVars,
 } from '@grafana/data';
 
-import {BackendSrvRequest, getTemplateSrv} from '@grafana/runtime';
+import {BackendSrv, BackendSrvRequest, getTemplateSrv} from '@grafana/runtime';
 
 import { JSONQuery, JSONQueryOptions, defaultQuery } from './types';
 
@@ -23,7 +22,7 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
   apiKey: string;
 
   // Grafana's backend
-  backendSrv: any;
+  backendSrv: BackendSrv;
 
   // Template variables
   template_location: string;
@@ -31,6 +30,7 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
   template_value: string;
   baseURL: string;
   apiKeyConfigured: boolean;
+  instanceId: number;
 
   constructor(instanceSettings: DataSourceInstanceSettings<JSONQueryOptions>, backendSrv: any) {
     super(instanceSettings);
@@ -40,6 +40,7 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
     this.apiKeyConfigured = instanceSettings.jsonData.apiKeyConfigured;
     this.apiURL = `${this.baseURL}${this.apiPath}${this.customerId}`;
     this.backendSrv = backendSrv;
+    this.instanceId = instanceSettings.id;
 
     // Initialise template variables
     this.template_location = '';
@@ -321,12 +322,11 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
     const b64encodedAuth = Buffer.from(`${this.customerId}:${this.apiKey}`).toString('base64')
     options.headers["Authorization"] = `Basic ${b64encodedAuth}`
 
-    //console.log("Executing request with options: ", JSON.stringify(options))
-
     return this.backendSrv.fetch({
-      url: options.url,
+      url: "api/datasources/proxy/" + this.instanceId + "/" + options.url,
       method: options.method || 'GET',
       headers: options.headers
     }).toPromise()
+
   }
 }
