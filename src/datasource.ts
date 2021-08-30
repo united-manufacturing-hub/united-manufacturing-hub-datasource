@@ -10,7 +10,7 @@ import {
   ScopedVars,
 } from '@grafana/data';
 
-import {BackendSrv, BackendSrvRequest, getTemplateSrv} from '@grafana/runtime';
+import {BackendSrv, BackendSrvRequest, getBackendSrv, getTemplateSrv} from '@grafana/runtime';
 
 import { JSONQuery, JSONQueryOptions, defaultQuery } from './types';
 
@@ -322,12 +322,19 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
     const b64encodedAuth = Buffer.from(`${this.customerId}:${this.apiKey}`).toString('base64')
     options.headers["Authorization"] = `Basic ${b64encodedAuth}`
 
+    return getBackendSrv().fetch({
+      url: options.url,
+      method: options.method || 'GET',
+      headers: options.headers
+    }).toPromise()
+
+    /*
     return this.backendSrv.fetch({
      // url: "api/datasources/proxy/" + this.instanceId + "/" + options.url,
       url: options.url,
       method: options.method || 'GET',
       headers: options.headers
     }).toPromise()
-
+*/
   }
 }
