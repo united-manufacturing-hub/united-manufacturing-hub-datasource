@@ -322,18 +322,10 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
     const b64encodedAuth = Buffer.from(`${this.customerId}:${this.apiKey}`).toString('base64')
     options.headers["Authorization"] = `Basic ${b64encodedAuth}`
 
-    /*
     return getBackendSrv().fetch({
       url: options.url,
       method: options.method || 'GET',
       headers: options.headers
     }).toPromise()
-*/
-
-    return getBackendSrv().datasourceRequest({
-      url: options.url,
-      method: options.method || 'GET',
-      headers: options.headers
-    })
   }
 }
