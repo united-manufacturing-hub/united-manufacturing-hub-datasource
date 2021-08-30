@@ -323,7 +323,8 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
     options.headers["Authorization"] = `Basic ${b64encodedAuth}`
 
     return this.backendSrv.fetch({
-      url: "api/datasources/proxy/" + this.instanceId + "/" + options.url,
+     // url: "api/datasources/proxy/" + this.instanceId + "/" + options.url,
+      url: options.url,
       method: options.method || 'GET',
       headers: options.headers
     }).toPromise()
