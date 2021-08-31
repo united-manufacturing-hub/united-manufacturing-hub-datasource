@@ -17,7 +17,7 @@ import { JSONQuery, JSONQueryOptions, defaultQuery } from './types';
 export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
   // To hold the instance's configuration parameters
   apiURL: string;
-  apiPath = 'api/v1/';
+  apiPath = '/api/v1/';
   customerId: string;
   apiKey: string;
 
