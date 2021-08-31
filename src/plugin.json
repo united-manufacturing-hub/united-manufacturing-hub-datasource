@@ -36,7 +36,7 @@
   "routes": [
     {
       "path": "factoryinsight",
-      "url": "http://factorycube-server-factoryinsight-service/api/v1",
+      "url": "{{ .JsonData.serverURL }}",
       "headers": [
         {
           "name": "Authorization",
