@@ -36,17 +36,7 @@
   "routes": [
     {
       "path": "factoryinsight",
-      "url": "{{ .JsonData.serverURL }}",
-      "headers": [
-        {
-          "name": "Authorization",
-          "content": "{{ .JsonData.apiKey }}"
-        },
-        {
-          "name": "Content-Type",
-          "content": "application/json"
-        }
-      ]
+      "url": "{{ .JsonData.serverURL }}"
     }
   ]
 }
