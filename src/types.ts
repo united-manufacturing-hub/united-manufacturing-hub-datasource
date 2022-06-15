@@ -26,7 +26,7 @@ export interface JSONQueryOptions extends DataSourceJsonData {
   apiPath: string;
   serverURL: string;
   apiKey: string;
-  apiKeyConfigured: boolean
+  apiKeyConfigured: boolean;
 
   // Variables to store the last query
   lastLocationIndex: number;
@@ -44,5 +44,4 @@ export const defaultOptions: Partial<JSONQueryOptions> = {
 /**
  * Value that is used in the backend, but never sent over HTTP to the frontend
  */
-export interface MySecureJsonData {
-}
+export interface MySecureJsonData {}

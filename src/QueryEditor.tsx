@@ -1,12 +1,12 @@
-import React, {ChangeEvent, MouseEvent, PureComponent} from 'react';
-import {Button, Input, Select} from '@grafana/ui';
-import {QueryEditorProps, SelectableValue} from '@grafana/data';
-import {defaultQuery, JSONQuery, JSONQueryOptions} from './types';
+import React, { ChangeEvent, MouseEvent, PureComponent } from 'react';
+import { Button, Input, Select } from '@grafana/ui';
+import { QueryEditorProps, SelectableValue } from '@grafana/data';
+import { defaultQuery, JSONQuery, JSONQueryOptions } from './types';
 
-import {AggregatedStates, aggregatedStatesDefaultString} from 'components/values/AggregatedStates';
-import {defaults} from 'lodash';
-import {ProcessValue} from "./components/values/ProcessValue";
-import {DataSource} from "./datasource";
+import { AggregatedStates, aggregatedStatesDefaultString } from 'components/values/AggregatedStates';
+import { defaults } from 'lodash';
+import { ProcessValue } from './components/values/ProcessValue';
+import { DataSource } from './datasource';
 
 type Props = QueryEditorProps<DataSource, JSONQuery, JSONQueryOptions>;
 type State = {
@@ -43,7 +43,7 @@ export class QueryEditor extends PureComponent<Props, State> {
     // This assumes that the server resturns an array of strings:
     // ['location1', 'location2', ...]
     this.props.datasource.getLocations((locationArray: any[]) => {
-      console.log("Got locations: ", locationArray)
+      console.log('Got locations: ', locationArray);
       // Get default or previous value
       const locationIndex = this.state.selectedLocation.index;
 
@@ -175,7 +175,7 @@ export class QueryEditor extends PureComponent<Props, State> {
 
     // Get the location-asset-value-related datapoints from the server
     // and update the default parameter string
-    this.updateChart(value, newParameterString,'');
+    this.updateChart(value, newParameterString, '');
   };
 
   // Handle parameters change
@@ -188,47 +188,46 @@ export class QueryEditor extends PureComponent<Props, State> {
     });
 
     // Update chart
-    this.updateChart(this.state.selectedValue, newParameterString,'');
+    this.updateChart(this.state.selectedValue, newParameterString, '');
   };
 
   // Handle urlPathExtension change
   onuriPathExtensionChange = (uriPathExtension: string) => {
-    console.log("onuriPathExtensionChange", uriPathExtension);
+    console.log('onuriPathExtensionChange', uriPathExtension);
     // Update the state with the new parameters
     this.setState({
       uriPathExtension: uriPathExtension,
     });
 
     // Update chart
-    this.updateChart(this.state.selectedValue, '',uriPathExtension);
+    this.updateChart(this.state.selectedValue, '', uriPathExtension);
   };
-
 
   // Get value-related parameters
   getParameterComponents = () => {
-    if (this.state.selectedValue.label === 'process_yourProcessValueName'){
+    if (this.state.selectedValue.label === 'process_yourProcessValueName') {
       return (
-          <div>
-            <span className="gf-form-pre">Process Value parameters</span>
-            <div className="gf-form">
-              <ProcessValue value={this.state.uriPathExtension} onChange={this.onuriPathExtensionChange} />
-            </div>
+        <div>
+          <span className="gf-form-pre">Process Value parameters</span>
+          <div className="gf-form">
+            <ProcessValue value={this.state.uriPathExtension} onChange={this.onuriPathExtensionChange} />
           </div>
+        </div>
       );
-    }else if (this.state.selectedValue.label === 'aggregatedStates') {
+    } else if (this.state.selectedValue.label === 'aggregatedStates') {
       return (
-          <div>
-            <span className="gf-form-pre">Value parameters</span>
-            <div className="gf-form">
-              <AggregatedStates value={this.state.parameterString} onChange={this.onParametersChange}/>
-            </div>
+        <div>
+          <span className="gf-form-pre">Value parameters</span>
+          <div className="gf-form">
+            <AggregatedStates value={this.state.parameterString} onChange={this.onParametersChange} />
           </div>
+        </div>
       );
     } else {
       this.setState({
         parameterString: '',
       });
-      return <div/>;
+      return <div />;
     }
   };
 
@@ -243,7 +242,7 @@ export class QueryEditor extends PureComponent<Props, State> {
       value: value,
       parameterString: parameterString,
       labelsField: this.state.labelsField,
-      uriPathExtension: uriPathExtension
+      uriPathExtension: uriPathExtension,
     });
     // executes the query
     onRunQuery();
@@ -290,7 +289,8 @@ export class QueryEditor extends PureComponent<Props, State> {
         <span className="gf-form-pre">Transformations</span>
         <div className="gf-form">
           <label className="gf-form-label">Labels field</label>
-          <Input css={""}
+          <Input
+            css={''}
             placeholder="Name of the field to be used as column names."
             onChange={this.onLabelsFieldNameChange}
             value={this.state.labelsField}

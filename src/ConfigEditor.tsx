@@ -30,14 +30,14 @@ export class ConfigEditor extends PureComponent<Props, State> {
 
   onAPIKeyChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onOptionsChange, options } = this.props;
-    const regex_match = event.target.value.match("^[0-9a-z]{8}(-[0-9a-z]{4}){3}-[0-9a-z]{12}$");
+    const regex_match = event.target.value.match('^[0-9a-z]{8}(-[0-9a-z]{4}){3}-[0-9a-z]{12}$');
     const jsonData = {
       ...options.jsonData,
       apiKey: event.target.value,
       /// UUI4
-      apiKeyConfigured: regex_match !== null && regex_match[0].length === 36
+      apiKeyConfigured: regex_match !== null && regex_match[0].length === 36,
     };
-    onOptionsChange({...options, jsonData});
+    onOptionsChange({ ...options, jsonData });
   };
 
   onResetAPIKey = () => {
