@@ -10,7 +10,7 @@ import {
   ScopedVars,
 } from '@grafana/data';
 
-import {BackendSrv, BackendSrvRequest, getBackendSrv, getTemplateSrv} from '@grafana/runtime';
+import { BackendSrv, BackendSrvRequest, getBackendSrv, getTemplateSrv } from '@grafana/runtime';
 
 import { JSONQuery, JSONQueryOptions, defaultQuery } from './types';
 
@@ -36,7 +36,7 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
     super(instanceSettings);
     this.customerId = instanceSettings.jsonData.customerId || '';
     //this.baseURL = (instanceSettings.jsonData.serverURL || '')
-    this.baseURL = (instanceSettings.url || '')
+    this.baseURL = instanceSettings.url || '';
     this.apiKey = instanceSettings.jsonData.apiKey || '';
     this.apiKeyConfigured = instanceSettings.jsonData.apiKeyConfigured;
     this.apiURL = `${this.baseURL}${this.apiPath}${this.customerId}`;
@@ -136,6 +136,7 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
           });
         } else if (columnName === 'fieldName') {
           // TODO Special case
+          console.log('TODO: Special case for fieldName');
         } else {
           // Check data type
           const sampleValue = datapoints[queryIndex][columnIndex][0];
@@ -161,49 +162,57 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
       title: 'Success',
     };
 
-    if (this.apiKeyConfigured){
+    if (this.apiKeyConfigured) {
       await this.fetchAPIRequest({
-        url: this.baseURL
+        url: this.baseURL,
       })
-          .then((res: any) => {
-            if (res === undefined || res.status !== 200 || res.data !== "online") {
-              console.log(JSON.stringify(res))
-              testResult.status = 'error';
-              testResult.message = `Wrong response from server: ${res}`;
-              testResult.title = `Data source connection error`;
-            }
-          })
-          .catch((error: any) => {
+        .then((res: any) => {
+          if (res === undefined || res.status !== 200 || res.data !== 'online') {
+            console.log(JSON.stringify(res));
             testResult.status = 'error';
-            testResult.message = `Caught error in datasource test: ${JSON.stringify(error)}`;
-            testResult.title = `Data source exception`;
+            testResult.message = `Wrong response from server: ${res}`;
+            testResult.title = `Data source connection error`;
+          }
+        })
+        .catch((error: any) => {
+          testResult.status = 'error';
+          testResult.message = `Caught error in datasource test: ${JSON.stringify(error)}`;
+          testResult.title = `Data source exception`;
         });
-    }else{
+    } else {
       testResult.status = 'error';
       testResult.message = 'API Key not configured';
-      testResult.title= 'Invalid configuration'
+      testResult.title = 'Invalid configuration';
     }
     return testResult;
   }
 
   async getLocations(callback: Function) {
     return this.fetchAPIRequest({
-      url: this.apiURL
-    }).then((res: any) => {
-      callback(res.data)
+      url: this.apiURL,
     })
+      .then((res: any) => {
+        callback(res.data);
+      })
+      .catch((error: any) => {
+        console.error(error);
+        throw new Error('Failed to fetch locations');
+      });
   }
 
   async getAssets(location: string, callback: Function) {
     if (location === '' || isUndefined(location)) {
       return;
     }
-    this
-      .fetchAPIRequest({
-        url: this.apiURL + `/${location}`,
-      })
+    this.fetchAPIRequest({
+      url: this.apiURL + `/${location}`,
+    })
       .then((res: any) => {
         callback(res.data);
+      })
+      .catch((error: any) => {
+        console.error(error);
+        throw new Error('Failed to fetch assets');
       });
   }
 
@@ -214,12 +223,15 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
     if (asset === '' || isUndefined(asset)) {
       return;
     }
-    this
-      .fetchAPIRequest({
-        url: this.apiURL + `/${location}/${asset}`,
-      })
+    this.fetchAPIRequest({
+      url: this.apiURL + `/${location}/${asset}`,
+    })
       .then((res: any) => {
         callback(res.data);
+      })
+      .catch((error: any) => {
+        console.error(error);
+        throw new Error('Failed to fetch values');
       });
   }
 
@@ -274,8 +286,8 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
       let value = this.template_value;
       // Define location
       if (this.isEmptyOrUndefined(location)) {
-        if (queries[i] === undefined || queries[i].location === undefined){
-          continue
+        if (queries[i] === undefined || queries[i].location === undefined) {
+          continue;
         }
         location = queries[i].location.label;
         if (this.isEmptyOrUndefined(location)) {
@@ -297,9 +309,11 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
         }
       }
       await this.fetchAPIRequest({
-          url: this.apiURL + `/${location}/${asset}/${value}${uriPathExtensionString}?from=${from}&to=${to}${parameterString}`,
-          method: 'GET',
-        })
+        url:
+          this.apiURL +
+          `/${location}/${asset}/${value}${uriPathExtensionString}?from=${from}&to=${to}${parameterString}`,
+        method: 'GET',
+      })
         .then((res: any) => {
           // Handle empty responses
           if (res.data.datapoints === null) {
@@ -309,6 +323,10 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
           // Push datapoints
           columnNames.push(res.data.columnNames);
           datapoints.push(this.transpose(res.data.datapoints));
+        })
+        .catch((error: any) => {
+          console.error(error);
+          throw new Error('Failed to fetch datapoints');
         });
     }
 
@@ -316,18 +334,20 @@ export class DataSource extends DataSourceApi<JSONQuery, JSONQueryOptions> {
   }
 
   /// Replacement for deprecated fetchAPIRequest, using fetch api
-  async fetchAPIRequest(options: BackendSrvRequest): Promise<any>{
+  async fetchAPIRequest(options: BackendSrvRequest): Promise<any> {
     if (options.headers === undefined) {
-      options.headers = {}
+      options.headers = {};
     }
-    const b64encodedAuth = Buffer.from(`${this.customerId}:${this.apiKey}`).toString('base64')
-    options.headers["Authorization"] = `Basic ${b64encodedAuth}`
-    options.headers["Content-Type"] = `application/json`
+    const b64encodedAuth = Buffer.from(`${this.customerId}:${this.apiKey}`).toString('base64');
+    options.headers['Authorization'] = `Basic ${b64encodedAuth}`;
+    options.headers['Content-Type'] = `application/json`;
 
-    return getBackendSrv().fetch({
-      url: options.url,
-      method: options.method || 'GET',
-      headers: options.headers
-    }).toPromise()
+    return getBackendSrv()
+      .fetch({
+        url: options.url,
+        method: options.method || 'GET',
+        headers: options.headers,
+      })
+      .toPromise();
   }
 }

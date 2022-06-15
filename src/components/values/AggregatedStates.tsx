@@ -24,7 +24,7 @@ export class AggregatedStates extends Component<Props, State> {
     let initialState = false;
     try {
       const urlParameters = this.props.value.split('&');
-      urlParameters.map(parameter => {
+      urlParameters.map((parameter) => {
         const keyValuePair = parameter.split('=');
         // Look for inlude running
         if (keyValuePair[0] === 'includeRunning') {
@@ -34,7 +34,9 @@ export class AggregatedStates extends Component<Props, State> {
         }
       });
     } catch {
-      console.log('Wrong aggregatedStates parameters. It must either be includeRunning=true or includeRunning=false ');
+      console.error(
+        'Wrong aggregatedStates parameters. It must either be includeRunning=true or includeRunning=false '
+      );
     }
     this.state = {
       includeRunning: initialState,
@@ -53,7 +55,7 @@ export class AggregatedStates extends Component<Props, State> {
     return (
       <div className="gf-form">
         <label className="gf-form-label with-5 query-keyword">Include Running</label>
-        <Switch css={""} disabled={false} value={this.state.includeRunning} onChange={this.onIncludeRunningChange} />
+        <Switch css={''} disabled={false} value={this.state.includeRunning} onChange={this.onIncludeRunningChange} />
       </div>
     );
   }
