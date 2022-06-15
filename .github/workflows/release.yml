@@ -51,7 +51,7 @@ jobs:
           steps.cache-node-modules.outputs.cache-hit != 'true'
 
       - name: Build frontend
-        run: yarn dev
+        run: yarn build
 
       - name: Get plugin metadata
         id: metadata
